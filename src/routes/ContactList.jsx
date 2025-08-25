@@ -29,7 +29,7 @@ function ContactList() {
     setPage(newPage);
   };
   return (
-    <>
+    <div className="mt-3">
       <div className="clearfix">
         <h2 className="text-xl font-bold mb-3 float-start">Manage Contacts</h2>
       </div>
@@ -42,7 +42,7 @@ function ContactList() {
         totalPages={totalPages}
         fetchPage={fetchPage}
       />
-    </>
+    </div>
   );
 }
 

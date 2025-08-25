@@ -10,8 +10,8 @@ function Home() {
 
   return (
     <>
-      <div>
-        <div className="clearfix mt-3">
+      <div className="mt-3">
+        <div className="clearfix">
           <h2 className="text-xl font-bold mb-3 float-start">Recent Blog Posts</h2>
           <Link to="/blogs/new" className="btn btn-outline-info float-end">
             <i className="fa-solid fa-plus"></i> Add New Blog
@@ -24,7 +24,7 @@ function Home() {
           actions={BLOG_ACTIONS}
           basePath="blogs"
         />
-        <div className="clearfix mt-3">
+        <div className="clearfix">
           <Link to="/blogs" className="btn btn-outline-dark float-end">
             View all blogs <i className="fa-solid fa-arrow-right"></i>
           </Link>

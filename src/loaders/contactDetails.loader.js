@@ -11,7 +11,7 @@ export async function contactDetails({ params }){
     const data = await responseData.data
 
     if (!data.read_status){
-        await apiFetch(`http://127.0.0.1:8000/api/admin/contact/${params.id}`, {
+        await apiFetch(`admin/contact/${params.id}`, {
             method: "PATCH",
             headers
         })

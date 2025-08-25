@@ -29,7 +29,7 @@ function BlogList() {
   };
 
   return (
-    <>
+    <div className="mt-3">
       <div className="clearfix">
         <h2 className="text-xl font-bold mb-3 float-start">Manage Blogs</h2>
         <Link to="/blogs/new" className="btn btn-outline-info float-end">
@@ -45,7 +45,7 @@ function BlogList() {
         totalPages={totalPages}
         fetchPage={fetchPage}
       />
-    </>
+    </div>
   );
 }
 

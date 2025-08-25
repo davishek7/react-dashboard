@@ -6,7 +6,7 @@ function ContactDetails() {
   const navigate = useNavigate()
 
   return (
-    <>
+    <div className="mt-3">
       <div className="clearfix">
         <h2 className="text-xl font-bold float-start">Contact Details</h2>
         <button onClick={() => navigate(-1)} className="btn btn-outline-info float-end">
@@ -21,7 +21,7 @@ function ContactDetails() {
           <p className="card-text" style={{ whiteSpace: "pre-wrap" }}>{data.message}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
