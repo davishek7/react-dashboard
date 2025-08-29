@@ -14,7 +14,7 @@ function Login() {
   useEffect(()=>{
     if(actionData?.status === 200){
       saveAuth(actionData.data.user, actionData.data.auth_tokens.access_token, actionData.data.auth_tokens.refresh_token)
-      navigate("/")
+      navigate("/", { replace: true })
     }
     else if(actionData?.status === 403){
       toast.warning(actionData.message)

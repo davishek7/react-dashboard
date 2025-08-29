@@ -1,15 +1,14 @@
-import { API_URL } from "../constants/api.constants";
+import { apiFetch } from "../utils/api";
 
-export async function registerAction({ request }) {
+export async function editBlogAction({ request, params }) {
   const formData = await request.formData();
   const postData = Object.fromEntries(formData);
 
-  const response = await fetch(`${API_URL}/auth/register`, {
-    method: "POST",
+  const response = await apiFetch(`admin/blog/${params.slug}`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(postData),
   });
   const responseData = await response.json();
-
-  return responseData
+  return responseData;
 }

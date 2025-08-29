@@ -18,7 +18,7 @@ function BlogList() {
       "Content-Type": "application/json",
     };
     const res = await apiFetch(
-      `http://127.0.0.1:8000/api/admin/blog?limit=${limit}&offset=${offset}`,
+      `admin/blog?limit=${limit}&offset=${offset}`,
       { headers }
     );
     const responseData = await res.json();

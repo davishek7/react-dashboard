@@ -1,36 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  Form,
-  useNavigation,
   useNavigate,
+  useNavigation,
+  useLoaderData,
   useActionData,
+  Form,
 } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
-function NewBlog() {
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [content, setContent] = useState("");
-  const actionData = useActionData();
+function EditBlog() {
   const navigation = useNavigation();
   const navigate = useNavigate();
+  const loaderData = useLoaderData();
+  const actionData = useActionData();
 
-  useEffect(() => {
-    if (actionData?.status === 201) {
-      toast.success(actionData?.message);
-      navigate("/blogs");
-    } else {
-      toast.error(actionData?.message);
-    }
-  }, [actionData, navigate]);
+  const [title, setTitle] = useState(loaderData.title);
+  const [subtitle, setSubtitle] = useState(loaderData.subtitle);
+  const [content, setContent] = useState(loaderData.content);
 
   const isFormEmpty = !title.trim() || !subtitle.trim() || !content.trim();
+
+  useEffect(() => {
+    if (actionData?.status === 200) {
+        toast.success(actionData.message);
+        navigate(`/blogs/${loaderData.slug}`);
+    }
+  }, [actionData, navigate, loaderData.slug])
 
   return (
     <div className="mt-3">
       <div className="clearfix">
-        <h2 className="text-xl font-bold mb-3 float-start">Create New Blog</h2>
+        <h2 className="text-xl font-bold mb-3 float-start">
+          Edit Blog: {loaderData.title}
+        </h2>
       </div>
       <Form method="post">
         <div className="form-floating mb-3">
@@ -60,7 +64,11 @@ function NewBlog() {
           <label htmlFor="subtitle">Subtitle</label>
         </div>
         <div>
-          <MDEditor value={content} onChange={setContent} height={400} />
+          <MDEditor
+            value={content}
+            onChange={setContent}
+            height={400}
+          />
           <input type="hidden" name="content" value={content} />
         </div>
         <br />
@@ -77,4 +85,4 @@ function NewBlog() {
   );
 }
 
-export default NewBlog;
+export default EditBlog;

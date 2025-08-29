@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 
-function DataTable({
+function TrashedDataTable({
   columns,
   data,
   actions,
-  basePath,
+  onRestore,
+  onDelete,
   page,
   totalPages,
   fetchPage,
@@ -18,7 +19,9 @@ function DataTable({
             {columns.map((col) => (
               <th key={col.accessorKey}>{col.header}</th>
             ))}
-            {actions && <th>Actions</th>}
+            {actions.map((action) => (
+              <th key={action.label}>{action.label}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -26,42 +29,23 @@ function DataTable({
             data.map((row, i) => (
               <tr key={i}>
                 {columns.map((col) => (
-                  <td
-                    key={col.accessorKey}
-                    className={
-                      "read_status" in row && !row.read_status
-                        ? "table-info"
-                        : ""
-                    }
-                  >
-                    {col.accessorKey === "is_active"
-                      ? row[col.accessorKey]
-                        ? "Active"
-                        : "Inactive"
-                      : row[col.accessorKey]}
+                  <td key={col.accessorKey}>{row[col.accessorKey]}</td>
+                ))}
+                {actions.map((action) => (
+                  <td key={action.label}>
+                    {action.label === "Restore" ? (
+                      <i className={action.icon} onClick={() => onRestore(row.slug ? row.slug : row.id)}></i>
+                    ) : (
+                      <i className={action.icon} onClick={() => onDelete(row.slug ? row.slug : row.id)}></i>
+                    )}
                   </td>
                 ))}
-                {actions && (
-                  <td>
-                    <div className="btn-group">
-                      {actions.map((action, idx) => (
-                        <Link
-                          to={basePath ? `${basePath}/${row.slug ?? row.id}` : `${row.slug ?? row.id}`}
-                          key={idx}
-                          className={`btn btn-sm ${action.className}`}
-                        >
-                          {action.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </td>
-                )}
               </tr>
             ))
           ) : (
             <tr>
               <td
-                colSpan={columns.length + (actions ? 1 : 0)}
+                colSpan={columns.length + (actions ? 2 : 0)}
                 className="text-center"
               >
                 No data found
@@ -80,13 +64,18 @@ function DataTable({
             gap: "1rem",
           }}
         >
-          <button className="btn btn-sm btn-outline-dark" disabled={page === 1} onClick={() => fetchPage(page - 1)}>
+          <button
+            className="btn btn-sm btn-outline-dark"
+            disabled={page === 1}
+            onClick={() => fetchPage(page - 1)}
+          >
             Prev
           </button>
           <span>
             Page {page} of {totalPages}
           </span>
-          <button className="btn btn-sm btn-outline-dark"
+          <button
+            className="btn btn-sm btn-outline-dark"
             disabled={page === totalPages}
             onClick={() => fetchPage(page + 1)}
           >
@@ -98,4 +87,4 @@ function DataTable({
   );
 }
 
-export default DataTable;
+export default TrashedDataTable;

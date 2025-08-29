@@ -17,16 +17,24 @@ import ContactList from "./routes/ContactList";
 import ContactDetails from "./routes/ContactDetails";
 import NewBlog from "./routes/NewBlog";
 import ReverifyEmail from "./routes/ReverifyEmail";
+import EditBlog from "./routes/EditBlog";
+import TrashedBlogs from "./routes/TrashedBlogs";
+import TrashedContacts from "./routes/TrashedContacts";
 import { homeLoader } from "./loaders/home.loader";
 import { contactDetails } from "./loaders/contactDetails.loader";
 import { emailVerificationLoader } from "./loaders/emailVerification.loader";
 import { blogListLoader } from "./loaders/blogList.loader";
 import { contactListLoader } from "./loaders/contactList.loader";
+import { blogDetails } from "./loaders/blogDetails.loader";
+import { trashedBlogsLoader } from "./loaders/trashedBlogs.loader";
+import { trashedContactsLoader } from "./loaders/trashedContacts.loader";
 import { loginAction } from "./actions/login.action";
 import { registerAction } from "./actions/register.action";
 import { forgotPasswordAction } from "./actions/forgotPassword.action";
 import { passwordResetAction } from "./actions/passwordReset.action";
 import { resendEmailVerificationAction } from "./actions/resendEmailVerification.action";
+import { newBlogAction } from "./actions/newBlog.action";
+import { editBlogAction } from "./actions/editBlog.action";
 import Profile from "./routes/Profile";
 
 const router = createBrowserRouter([
@@ -45,12 +53,20 @@ const router = createBrowserRouter([
         loader: blogListLoader,
       },
       {
-        path: "/blogs/:id",
+        path: "/blogs/:slug",
         element: <BlogDetails />,
+        loader: blogDetails,
       },
       {
         path: "/blogs/new",
         element: <NewBlog />,
+        action: newBlogAction,
+      },
+      {
+        path: "/blogs/edit/:slug",
+        element: <EditBlog />,
+        loader: blogDetails,
+        action: editBlogAction,
       },
       {
         path: "/contacts",
@@ -65,6 +81,16 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/trash/blogs",
+        element: <TrashedBlogs />,
+        loader: trashedBlogsLoader,
+      },
+      {
+        path: "/trash/contacts",
+        element: <TrashedContacts />,
+        loader: trashedContactsLoader,
       },
     ],
   },

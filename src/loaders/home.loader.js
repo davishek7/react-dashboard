@@ -8,7 +8,7 @@ export async function homeLoader() {
 
     const [blogRes, contactRes] = await Promise.all([
         apiFetch("admin/blog/", {headers}),
-        apiFetch("admin/contact", {headers}),
+        apiFetch("admin/contact/", {headers}),
     ]);
 
     const blogResData = await blogRes.json()
